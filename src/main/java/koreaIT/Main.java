@@ -1,5 +1,7 @@
 package koreaIT;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -36,13 +38,19 @@ public class Main {
                     System.out.println("정수를 추가해서 입력해주세요");
                 }
                 // parsing end
+                boolean flag = true;
                 if (!articleList.isEmpty()) {
                     for (Article article : articleList) {
                         if (article.getId() == detailId) {
-                            System.out.println("너가 찾는 게시물 있어");
-                        } else {
-                            System.out.printf("%d번 게시물은 없습니다\n", detailId);
+                            flag = false;
+                            System.out.println("번호 : " + article.getId());
+                            System.out.println("날짜 : " + article.getRegDate());
+                            System.out.println("제목 : " + article.getTitle());
+                            System.out.println("내용 : " + article.getBody());
                         }
+                    }
+                    if(flag == true){
+                        System.out.printf("%d번 게시글은 없습니다\n", detailId);
                     }
                 } else {
                     System.out.println("게시글이 없습니다");
@@ -64,6 +72,14 @@ public class Main {
                 System.out.printf("내용 : ");
                 String body = sc.nextLine();
 
+                //String regDate = "2025-12-12 12:12:12";
+                //현재 일시 불러와서 형식 변경
+                LocalDateTime now = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                String formatedNow = now.format(formatter);
+                String regDate = formatedNow;
+
+
                 lastId++;
                 int id = lastId;
 
@@ -71,10 +87,12 @@ public class Main {
                 addArticle.setId(id);
                 addArticle.setTitle(title);
                 addArticle.setBody(body);
+                addArticle.setRegDate(regDate);
 
                 articleList.add(addArticle);
 
                 System.out.printf("%d번 글이 생성되었습니다.\n", lastId);
+
             } else if (cmd.equals("exit")) {
                 System.out.println(" == 프로그램 종료 == ");
                 break;
