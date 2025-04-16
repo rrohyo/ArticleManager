@@ -18,12 +18,32 @@ public class Main {
 
         while (true) {
             System.out.printf("명령어) ");
-            String cmd = sc.nextLine();
+            String cmd = sc.nextLine().trim();
 
-            if (cmd.equals("article list")) {
+            if(cmd.startsWith("article detail")){
+                String[] cmdBits = cmd.split(" ");
+
+                if(cmdBits.length > 3) {
+                    System.out.println("명령어를 제대로 입력해주세요");
+                }
+
+                try{
+                    int detailId = Integer.parseInt(cmdBits[2]);
+                }catch (NumberFormatException e) {
+                    System.out.println("정수를 제대로 입력해 주세요");
+                }catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("정수를 추가해서 입력해주세요");
+                }
+
+
+
+            }
+
+            else if (cmd.equals("article list")) {
                 System.out.println("번호  /  제목  /  내용");
                 for (int i = articleList.size()-1 ; i >= 0 ; i--) {
-                    System.out.printf("%d  /%s  /%s\n", articleList.get(i).getId(),
+                    System.out.printf("%d  /%s  /%s\n",
+                            articleList.get(i).getId(),
                             articleList.get(i).getTitle(),
                             articleList.get(i).getBody());
 
