@@ -4,6 +4,16 @@ public class Article {
     private int id;
     private String title;
     private String body;
+    private String regDate;
+    private String updateDate;
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
 
     public String getRegDate() {
         return regDate;
@@ -12,8 +22,6 @@ public class Article {
     public void setRegDate(String regDate) {
         this.regDate = regDate;
     }
-
-    private  String regDate;
 
     public int getId() {
         return id;

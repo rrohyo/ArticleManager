@@ -25,7 +25,56 @@ public class Main {
             System.out.print("명령어) ");
             String cmd = sc.nextLine().trim();
 
-            if(cmd.startsWith("article delete")){
+            if(cmd.startsWith("article modify")){
+                // parsing start
+                String[] cmdBits = cmd.split(" ");
+
+                if (cmdBits.length > 3) {
+                    System.out.println("명령어를 제대로 입력해주세요.");
+                }
+                int modifyId = -1;
+                try {
+                    modifyId = Integer.parseInt(cmdBits[2]);
+                } catch (NumberFormatException e) {
+                    System.out.println("정수를 제대로 입력해주세요.");
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("정수를 추가해서 입력해주세요.");
+                }
+                // parsing end
+
+                // modifyId 로 게시글 찾아보기
+                boolean flag = true;
+                if (!articleList.isEmpty()) {
+                    for (Article article : articleList) {
+                        if (article.getId() == modifyId) {
+                            flag = false;
+
+                            System.out.println("기존 제목 : " + article.getTitle());
+                            System.out.println("기존 내용 : " + article.getBody());
+                            System.out.print("새 제목 : ");
+                            String newTitle = sc.nextLine().trim();
+                            System.out.print("새 내용 : ");
+                            String newBody = sc.nextLine().trim();
+
+                            String updateDate = Util.getNowDate();
+
+                            article.setTitle(newTitle);
+                            article.setBody(newBody);
+                            article.setUpdateDate(updateDate);
+
+                            System.out.printf("%d번 게시글이 수정되었습니다.\n", modifyId);
+
+                            break;
+                        }
+                    }
+                    if (flag == true) {
+                        System.out.printf("%d번 게시글은 없습니다\n", modifyId);
+                    }
+                } else {
+                    System.out.println("게시글이 아예 없습니다.");
+                }
+            }
+            else if(cmd.startsWith("article delete")){
                 // parsing start
                 String[] cmdBits = cmd.split(" ");
 
@@ -85,7 +134,10 @@ public class Main {
                         if (article.getId() == detailId) {
                             flag = false;
                             System.out.println("번호 : " + article.getId());
-                            System.out.println("날짜 : " + article.getRegDate());
+                            System.out.println("등록날짜 : " + article.getRegDate());
+                            if(article.getUpdateDate() != null){ // String 널체크 문법 체크하기
+                                System.out.println("수정날짜 : " + article.getUpdateDate());
+                            }
                             System.out.println("제목 : " + article.getTitle());
                             System.out.println("내용 : " + article.getBody());
                         }
