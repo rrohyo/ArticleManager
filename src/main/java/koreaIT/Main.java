@@ -31,8 +31,17 @@ public class Main {
 
 
             if (cmd.startsWith("member join")) {
-                System.out.print("로그인 아이디 : ");
-                String loginId = sc.nextLine();
+                String loginId;
+                while (true) {
+                    System.out.print("로그인 아이디 : ");
+                    loginId = sc.nextLine();
+
+                    if (isJoinableLoginId(loginId) == false) {
+                        System.out.println("이미 사용 중인 아이디입니다.");
+                        continue;
+                    }
+                    break;
+                }
                 System.out.print("로그인 비밀번호 : ");
                 String loginPw = sc.nextLine();
                 System.out.print("이름 : ");
@@ -169,6 +178,14 @@ public class Main {
 
         }
 
+    }
+    private static boolean isJoinableLoginId(String loginId) {
+        for (Member member : memberList) {
+            if (member.getLoginId().equals(loginId)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static Article getArticleById(int id) {
