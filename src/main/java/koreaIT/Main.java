@@ -42,8 +42,19 @@ public class Main {
                     }
                     break;
                 }
-                System.out.print("로그인 비밀번호 : ");
-                String loginPw = sc.nextLine();
+                String loginPw;
+                while(true){
+                    System.out.print("로그인 비밀번호 : ");
+                    loginPw = sc.nextLine();
+                    System.out.print("로그인 비밀번호 확인 : ");
+                    String loginPwConfirm = sc.nextLine();
+
+                    if (!loginPw.equals(loginPwConfirm)){
+                        System.out.println("비밀번호 다시 확인해주세요.");
+                        continue;
+                    }
+                    break;
+                }
                 System.out.print("이름 : ");
                 String name = sc.nextLine();
 
