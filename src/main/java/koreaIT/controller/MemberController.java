@@ -3,18 +3,31 @@ package koreaIT.controller;
 import koreaIT.dto.Member;
 import koreaIT.util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
+public class MemberController extends Controller {
 
     private Scanner sc;
-    List<Member> memberList;
-    int lastMemebrId = 0;
+    private List<Member> memberList;
+    private int lastMemebrId = 0;
 
-    public MemberController(Scanner sc, List<Member> memberList) {
+    public MemberController(Scanner sc) {
         this.sc = sc;
-        this.memberList = memberList;
+        this.memberList = new ArrayList<>();
+    }
+
+    public void doAction(String methodName, String cmd){
+
+        switch (methodName){
+            case "join":
+                doJoin();
+                break;
+            default:
+                System.out.println("명령어를 확인해주세요.4");
+        }
+
     }
 
     public void doJoin() {
