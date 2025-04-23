@@ -12,7 +12,6 @@ public class MemberController extends Controller {
     private Scanner sc;
     private List<Member> memberList;
     private int lastMemberId = 3;
-    private Member loginedMember = null;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
@@ -22,7 +21,20 @@ public class MemberController extends Controller {
     public void doAction(String methodName, String cmd){
 
         switch (methodName){
+            case "logout":
+                // 로그인 상태 체크
+                if(!isLogined()){
+                    System.out.println("이미 로그아웃 상태입니다.");
+                    break;
+                }
+                doLogout();
+                break;
             case "login":
+                // 로그인 상태 체크
+                if(isLogined()){
+                    System.out.println("이미 로그인 상태입니다.");
+                    break;
+                }
                 doLogin();
                 break;
             case "join":
@@ -37,13 +49,12 @@ public class MemberController extends Controller {
 
     }
 
-    public void doLogin(){
-        // 로그인 체크
-        if (loginedMember != null){
-            System.out.println("이미 로그인 상태입니다.");
-            return;
-        }
+    private void doLogout() {
+        loginedMember = null;
+        System.out.println("로그아웃 성공");
+    }
 
+    private void doLogin(){
         System.out.println("== 로그인 ==");
         System.out.print("로그인 아이디 : ");
         String loginId = sc.nextLine();
@@ -66,13 +77,13 @@ public class MemberController extends Controller {
         }
     }
 
-    public void showMember(){
+    private void showMember(){
         for (Member member : memberList){
             System.out.println(member.toString());
         }
     }
 
-    public void doJoin() {
+    private void doJoin() {
         String loginId;
         while (true) {
             System.out.print("로그인 아이디 : ");
