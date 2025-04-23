@@ -37,9 +37,33 @@ public class MemberController extends Controller {
 
     }
 
-    private void doLogin() {
-        
+    public void doLogin(){
+        // 로그인 체크
+        if (loginedMember != null){
+            System.out.println("이미 로그인 상태입니다.");
+            return;
+        }
 
+        System.out.println("== 로그인 ==");
+        System.out.print("로그인 아이디 : ");
+        String loginId = sc.nextLine();
+        System.out.print("로그인 비밀번호 : ");
+        String loginPw = sc.nextLine();
+
+        Member member = getMemberByLoginId(loginId);
+
+        if (member == null){
+            System.out.println("일치하는 회원이 없습니다.");
+            return;
+        }
+        if (member.getLoginPw().equals(loginPw)){
+            System.out.printf("로그인 성공! %s님 환영합니다.\n", member.getName());
+            loginedMember = member;
+            return;
+        }else {
+            System.out.println("비밀번호가 틀렸습니다.");
+            return;
+        }
     }
 
     public void showMember(){
@@ -49,7 +73,6 @@ public class MemberController extends Controller {
     }
 
     public void doJoin() {
-
         String loginId;
         while (true) {
             System.out.print("로그인 아이디 : ");
@@ -89,6 +112,15 @@ public class MemberController extends Controller {
 
         System.out.printf("%d번 회원이 등록되었습니다. %s님 환영합니다.\n", lastMemberId, name);
 
+    }
+
+    private Member getMemberByLoginId(String loginId) {
+        for (Member member : memberList){
+            if (member.getLoginId().equals(loginId)){
+                return member;
+            }
+        }
+        return null;
     }
 
     private boolean isJoinableLoginId(String loginId) {
