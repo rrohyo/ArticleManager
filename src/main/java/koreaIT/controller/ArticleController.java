@@ -1,6 +1,7 @@
 package koreaIT.controller;
 
 import koreaIT.dto.Article;
+import koreaIT.service.ArticleService;
 import koreaIT.util.Util;
 
 import java.util.ArrayList;
@@ -13,9 +14,11 @@ public class ArticleController extends Controller {
     private List<Article> articleList;
     private int lastArticleId = 3;
 
+    ArticleService articleService = new ArticleService();
+
     public ArticleController(Scanner sc) {
         this.sc = sc;
-        this.articleList = new ArrayList<>();
+        this.articleList = articleService.getArticle();
     }
 
     @Override
@@ -60,10 +63,17 @@ public class ArticleController extends Controller {
         // parsing end
 
         // modifyId 로 게시글 찾아보기
-
         Article foundArticle = getArticleById(modifyId);
 
+
         if (foundArticle != null) {
+
+            // 로그인 중인 아이디와 게시글의 권한 체크
+            if (loginedMember.getId() != foundArticle.getMemberId()){
+                System.out.println("해당 게시글에 대한 권한이 없습니다.");
+                return;
+            }
+
             System.out.println("기존 제목 : " + foundArticle.getTitle());
             System.out.println("기존 내용 : " + foundArticle.getBody());
             System.out.print("새 제목 : ");
@@ -105,7 +115,13 @@ public class ArticleController extends Controller {
 
         // deleteId 로 게시글 찾아보기
         Article foundArticle = getArticleById(deleteId);
+
         if (foundArticle != null) {
+            // 로그인 중인 아이디와 게시글의 권한 체크
+            if (loginedMember.getId() != foundArticle.getMemberId()){
+                System.out.println("해당 게시글에 대한 권한이 없습니다.");
+                return;
+            }
             articleList.remove(foundArticle);
             System.out.printf("%d번 게시글이 삭제되었습니다.\n", deleteId);
         } else {
