@@ -22,19 +22,9 @@ public class ArticleController extends Controller {
     public void doAction(String methodName, String cmd) {
         switch (methodName) {
             case "modify":
-                // 로그인 상태 체크
-                if(!isLogined()){
-                    System.out.println("로그인 하고 이용하세요.");
-                    break;
-                }
                 doModify(cmd);
                 break;
             case "delete":
-                // 로그인 상태 체크
-                if(!isLogined()){
-                    System.out.println("로그인 하고 이용하세요.");
-                    break;
-                }
                 doDelete(cmd);
                 break;
             case "detail":
@@ -44,11 +34,6 @@ public class ArticleController extends Controller {
                 showList();
                 break;
             case "write":
-                // 로그인 상태 체크
-                if(!isLogined()){
-                    System.out.println("로그인 하고 이용하세요.");
-                    break;
-                }
                 doWrite();
                 break;
             default:

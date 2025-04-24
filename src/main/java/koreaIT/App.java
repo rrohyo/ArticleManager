@@ -53,6 +53,32 @@ public class App {
                 continue;
             }
 
+            String loginCheck = controllerName + "/" + methodName;
+
+            // 로그인이 필요한 메서드
+            switch (loginCheck) {
+                case "article/write":
+                case "article/modify":
+                case "article/delete":
+                case "member/logout":
+                    if (!Controller.isLogined()) {
+                        System.out.println("로그인 하고 이용하세요");
+                        continue;
+                    }
+                    break;
+            }
+
+            // 로그아웃이 필요한 메서드
+            switch (loginCheck) {
+                case "member/login":
+                case "member/join":
+                    if (Controller.isLogined()) {
+                        System.out.println("로그아웃 하고 이용하세요");
+                        continue;
+                    }
+                    break;
+            }
+
             controller.doAction(methodName, cmd);
 
         }
