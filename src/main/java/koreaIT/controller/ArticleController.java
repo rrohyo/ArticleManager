@@ -163,7 +163,15 @@ public class ArticleController extends Controller {
     private void showList() {
         System.out.println("번호  /  작성일  /   작성자   /    제목");
         for (int i = articleList.size() - 1; i >= 0; i--) {
-            System.out.printf("%d   / %s    /   %d  /  %s \n", articleList.get(i).getId(), articleList.get(i).getRegDate(), articleList.get(i).getMemberId(), articleList.get(i).getTitle());
+
+            if (Util.getNowDate().split(" ")[0].equals(articleList.get(i).getRegDate().split(" ")[0])){
+                System.out.printf("%d   / %s    /   %d  /  %s \n", articleList.get(i).getId(), articleList.get(i).getRegDate().split(" ")[1], articleList.get(i).getMemberId(), articleList.get(i).getTitle());
+
+            }else {
+                System.out.printf("%d   / %s    /   %d  /  %s \n", articleList.get(i).getId(), articleList.get(i).getRegDate().split(" ")[0], articleList.get(i).getMemberId(), articleList.get(i).getTitle());
+
+            }
+
         }
     }
 
